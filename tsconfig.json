@@ -1,3 +1,32 @@
 {
-  "extends": "@react-native/typescript-config/tsconfig.json"
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["ES6", "ESNext"],
+    "jsx": "react-native",
+    "noEmit": true,
+    "strict": true,
+    "moduleResolution": "Bundler",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@api/*": ["api/*"],
+      "@assets/*": ["components/*"],
+      "@components/*": ["components/*"],
+      "@constants/*": ["components/*"],
+      "@hooks/*": ["components/*"],
+      "@interfaces/*": ["components/*"],
+      "@navigation/*": ["components/*"],
+      "@screens/*": ["components/*"],
+      "@services/*": ["components/*"],
+      "@store/*": ["components/*"],
+      "@utils/*": ["components/*"]
+    },
+    "resolveJsonModule": true,
+    "isolatedModules": true
+  }
 }
