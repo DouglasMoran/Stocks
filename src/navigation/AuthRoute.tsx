@@ -7,7 +7,12 @@ const AuthStack = createNativeStackNavigator();
 
 const AuthRoute = () => {
   return (
-    <AuthStack.Navigator>
+    <AuthStack.Navigator
+      initialRouteName='LoginScreen'
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <AuthStack.Screen name='LoginScreen' component={LoginScreen} />
       <AuthStack.Screen name='LogoutScreen' component={LogoutScreen} />
     </AuthStack.Navigator>

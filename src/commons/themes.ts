@@ -55,7 +55,7 @@ export const Fonts = {
   primary: 'Poppins-ExtraBold',
   primaryBold: 'Poppins-Bold',
   primaryExtraBold: 'Poppins-ExtraBold',
-  primaryMedium: 'Poppins-Bold',
+  primaryMedium: 'Poppins-Medium',
   secondary: 'Roboto-Medium',
   secondaryMedium: 'Roboto-Medium',
   secondaryBold: 'Roboto-Bold',

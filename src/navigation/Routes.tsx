@@ -4,7 +4,7 @@ import AuthRoute from '@navigation/AuthRoute';
 import AppRoute from '@navigation/AppRoute';
 
 const Routes = () => {
-  const isSignin = true;
+  const isSignin = false;
 
   return (
     <NavigationContainer>

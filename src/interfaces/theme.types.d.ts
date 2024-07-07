@@ -5,4 +5,5 @@ declare global {
   type AppColorsType = keyof typeof Colors;
   type AppSpacingType = keyof typeof Spacing;
   type AppFontsType = keyof typeof Fonts;
+  type ButtonType = 'solid' | 'outline' | 'text';
 }

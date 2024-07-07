@@ -6,7 +6,11 @@ const AppStack = createNativeStackNavigator();
 
 const AppRoute = () => {
   return (
-    <AppStack.Navigator>
+    <AppStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <AppStack.Screen name='AppBottomTabs' component={AppBottomTabs} />
     </AppStack.Navigator>
   );
