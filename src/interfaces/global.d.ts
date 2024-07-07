@@ -1,13 +1,15 @@
 declare global {
-  interface ColorProp {
+  interface IColorProp {
     color: AppColorsType;
   }
 
-  interface SpacingProp {
+  interface ISpacingProp {
     space: AppSpacingType;
   }
 
-  interface FontProp {
+  interface IFontProp {
     font: AppFontsType;
   }
 }
+
+export {};
