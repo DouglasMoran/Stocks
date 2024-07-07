@@ -15,16 +15,17 @@
     "baseUrl": "./src",
     "paths": {
       "@api/*": ["api/*"],
-      "@assets/*": ["components/*"],
+      "@assets/*": ["assets/*"],
+      "@commons/*": ["commons/*"],
       "@components/*": ["components/*"],
-      "@constants/*": ["components/*"],
-      "@hooks/*": ["components/*"],
-      "@interfaces/*": ["components/*"],
-      "@navigation/*": ["components/*"],
-      "@screens/*": ["components/*"],
-      "@services/*": ["components/*"],
-      "@store/*": ["components/*"],
-      "@utils/*": ["components/*"]
+      "@constants/*": ["constants/*"],
+      "@hooks/*": ["hooks/*"],
+      "@interfaces/*": ["interfaces/*"],
+      "@navigation/*": ["navigation/*"],
+      "@screens/*": ["screens/*"],
+      "@services/*": ["services/*"],
+      "@store/*": ["store/*"],
+      "@utils/*": ["utils/*"]
     },
     "resolveJsonModule": true,
     "isolatedModules": true

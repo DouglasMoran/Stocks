@@ -1,11 +1,5 @@
-import { Text } from 'react-native';
+import Providers from '@navigation/Providers';
 
-const App = () => {
-  return (
-    <>
-      <Text>Here starting building the awesome app...!!</Text>
-    </>
-  );
-};
+const App = () => <Providers />;
 
 export default App;
