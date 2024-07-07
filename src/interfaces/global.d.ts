@@ -1,4 +1,9 @@
-import { KeyboardTypeOptions, StyleProp, ViewStyle } from 'react-native';
+import {
+  KeyboardTypeOptions,
+  StyleProp,
+  ViewStyle,
+  TextInputProps,
+} from 'react-native';
 declare global {
   interface ColorProp {
     color: AppColorsType;
@@ -13,10 +18,13 @@ declare global {
   }
 
   // Forms
-  interface InpuTextProps {
+  interface InpuTextProps extends TextInputProps {
     placeholder?: string;
     label?: string;
     type: KeyboardTypeOptions;
+    value: string;
+    isClearable?: boolean;
+    onClean?: () => void;
   }
 
   interface ButtonProps {

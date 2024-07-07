@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
+// import { resize } from '@utils/scales';
+
 const styles = (theme: any) =>
   StyleSheet.create({
     highlightedText: {
@@ -8,8 +10,8 @@ const styles = (theme: any) =>
     },
     input: {
       backgroundColor: theme.colors.primaryLightest,
-      paddingStart: theme.spacing.xsmall,
       borderRadius: theme.spacing.xsmall,
+      paddingStart: theme.spacing.xsmall,
       color: theme.colors.primaryDarkest,
       overflow: 'hidden',
     },

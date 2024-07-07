@@ -1,18 +1,34 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { Divider, useTheme } from 'react-native-paper';
 
+import PasswordInput from '@components/atoms/forms/PasswordInput';
 import InputText from '@components/atoms/forms/InpuText';
 import PowerBy from '@components/molecules/PowerBy';
 import Container from '@components/atoms/Container';
 import Button from '@components/atoms/Button';
 
-import GoogleIcon from '@assets/icons/ic-google.svg';
+import GoogleIcon from '@assets/icons/ic_google.svg';
+
+import useAuth from '@hooks/useAuth';
 
 import { resize } from '@utils/scales';
 
+import styles from './styles';
+
 const LoginScreen = () => {
   const theme = useTheme();
+
+  const {
+    passwordInputRef,
+    passwordEntered,
+    emailEntered,
+    setPasswordEntered,
+    setEmailEntered,
+    onLoginWithCredentials,
+    onLoginWithGoogle,
+    onSubmitEditing,
+  } = useAuth();
 
   return (
     <Container containerStyle={styles(theme).container}>
@@ -24,18 +40,22 @@ const LoginScreen = () => {
           label='Email address'
           type='email-address'
           placeholder='dev@gmail.com'
+          autoCapitalize='none'
+          blurOnSubmit={false}
+          value={emailEntered}
+          isClearable
+          onClean={() => setEmailEntered('')}
+          onChangeText={setEmailEntered}
+          onSubmitEditing={onSubmitEditing}
         />
-        <InputText
+        <PasswordInput
           label='Password'
-          type='visible-password'
-          placeholder='**************'
+          ref={passwordInputRef}
+          value={passwordEntered}
+          onChangeText={setPasswordEntered}
         />
       </View>
-      <Button
-        type='solid'
-        label='Next'
-        onPress={() => console.log('PRESS NEXT BUTTON!!')}
-      />
+      <Button type='solid' label='Next' onPress={onLoginWithCredentials} />
       <View style={styles(theme).dividerContainer}>
         <Divider style={styles(theme).divider} />
         <Text style={styles(theme).dividerText}>or</Text>
@@ -45,59 +65,11 @@ const LoginScreen = () => {
         type='outline'
         label='Continue with Google'
         icon={<GoogleIcon width={resize(24)} height={resize(24)} />}
-        onPress={() => console.log('PRESS GOOGLE SIGN IN BUTTON!!')}
+        onPress={onLoginWithGoogle}
       />
       <PowerBy />
     </Container>
   );
 };
-
-const styles = (theme: any) =>
-  StyleSheet.create({
-    container: {
-      gap: resize(12),
-      paddingTop: theme.spacing.xxxlarge,
-    },
-    header: {
-      marginBottom: theme.spacing.large,
-    },
-    formContainer: {
-      marginBottom: theme.spacing.xsmall,
-      gap: theme.spacing.small,
-    },
-    title: {
-      color: theme.colors.primaryBase,
-      fontFamily: theme.fonts.primary,
-      fontSize: resize(24),
-    },
-    subtitle: {
-      color: theme.colors.primaryDarkest,
-      fontFamily: theme.fonts.primaryBold,
-      fontSize: resize(18),
-    },
-    paragraph: {
-      color: theme.colors.generalBlack,
-      fontFamily: theme.fonts.secondaryLight,
-      fontSize: resize(16),
-    },
-    highlightedText: {
-      color: theme.colors.primaryDarkest,
-      fontFamily: theme.fonts.secondaryMedium,
-    },
-    dividerContainer: {
-      padding: 8,
-      alignItems: 'center',
-      flexDirection: 'row',
-    },
-    dividerText: {
-      fontFamily: theme.fonts.secondaryLight,
-      color: theme.colors.generalBlack,
-      marginHorizontal: theme.spacing.xxsmall,
-      fontSize: resize(16),
-    },
-    divider: {
-      flex: 1,
-    },
-  });
 
 export default LoginScreen;

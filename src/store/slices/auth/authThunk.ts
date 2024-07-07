@@ -28,11 +28,32 @@ export const getUserToken = createAsyncThunk(
   },
 );
 
-export const loginWithCredentials = createAsyncThunk(
+export const loginWithCredentials = createAsyncThunk<
+  LoginResponse,
+  GoogleCredentials,
+  AsyncThunkConfig
+>(
   'auth/loginWithCredentialsStatus',
-  async (credentials, thunkAPI) => {
-    console.log('CREDENTIALS ::: ', credentials);
-    console.log('THUNK API ::: ', thunkAPI);
-    return { status: 'success', data: 'Testing Thunk' };
+  async (credentials: GoogleCredentials, { rejectWithValue }) => {
+    try {
+      console.log('CREDENTIALS ::: ', credentials);
+      return { status: 'success', data: 'Testing Thunk' };
+    } catch (error) {
+      console.log('THUNK API ::: ', error, rejectWithValue);
+      return rejectWithValue('error');
+    }
+  },
+);
+
+export const loginWithGoogle = createAsyncThunk(
+  'auth/loginWithGoogleStatus',
+  async (_, { rejectWithValue }) => {
+    try {
+      console.log('GOOGLE SIGN IN ::: ', _);
+      console.log('GOOGLE SIGN IN ::: THUNK API ::: ');
+      return { status: 'success', data: 'Testing Thunk' };
+    } catch (error) {
+      return rejectWithValue(error);
+    }
   },
 );

@@ -1,8 +1,8 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createSlice } from '@reduxjs/toolkit';
 
 import {
   loginWithCredentials,
+  loginWithGoogle,
   getUserToken,
   setUserToken,
 } from '@store/slices/auth/authThunk';
@@ -10,7 +10,7 @@ import {
 const initialState = {
   token: null,
   loading: 'idle',
-} satisfies IAuthState as IAuthState;
+} satisfies AuthState as AuthState;
 
 const authSlice = createSlice({
   name: 'auth',
@@ -19,17 +19,23 @@ const authSlice = createSlice({
     setLoading: (state, { payload }) => {
       state.loading = payload;
     },
-    initializeToken: (state) => {
-      const USER_TOKEN = AsyncStorage.getItem('token');
-
-      console.log('initializeToken ::: USER TOKEN ::: ', USER_TOKEN);
-      if (USER_TOKEN) {
-        state.token === USER_TOKEN;
-      }
-    },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getUserToken.fulfilled, (state, { payload }) => {
+        console.log('getUserToken/fulfilled ::: STATE ::: ', state);
+        console.log(
+          'getUserToken/fulfilled ::: ACTION:::PAYLOAD ::: ',
+          payload,
+        );
+        if (payload) {
+          state.token === payload;
+        }
+      })
+      .addCase(setUserToken.rejected, (state, action) => {
+        console.log('setUserToken/fulfilled ::: STATE ::: ', state);
+        console.log('setUserToken/rejected ::: ACTION ::: ', action);
+      })
       .addCase(loginWithCredentials.pending, (state, action) => {
         console.log(
           'loginWithCredentials/pending ::: INITAL STATE ::: ',
@@ -45,23 +51,24 @@ const authSlice = createSlice({
           state.token,
         );
       })
-      .addCase(getUserToken.fulfilled, (state, { payload }) => {
-        console.log('getUserToken/fulfilled ::: STATE ::: ', state);
+      .addCase(loginWithGoogle.pending, (state, action) => {
         console.log(
-          'getUserToken/fulfilled ::: ACTION:::PAYLOAD ::: ',
-          payload,
+          'loginWithGoogle/pending ::: INITAL STATE ::: ',
+          state.loading,
         );
-        if (payload) {
-          state.token === payload;
-        }
+        console.log('loginWithGoogle/pending ::: ACTION ::: ', action);
       })
-      .addCase(setUserToken.rejected, (state, action) => {
-        console.log('setUserToken/fulfilled ::: STATE ::: ', state);
-        console.log('setUserToken/rejected ::: ACTION ::: ', action);
+      .addCase(loginWithGoogle.fulfilled, (state, action) => {
+        console.log('loginWithGoogle/fulfilled ::: STATE ::: ', state);
+        console.log('loginWithGoogle/fulfilled ::: ACTION ::: ', action);
+        console.log(
+          'loginWithGoogle ::: INITIAL STATE TOKEN ::: ',
+          state.token,
+        );
       });
   },
 });
 
-export const { setLoading, initializeToken } = authSlice.actions;
+export const { setLoading } = authSlice.actions;
 
 export default authSlice.reducer;

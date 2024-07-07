@@ -6,30 +6,30 @@ import { TouchableRipple, useTheme } from 'react-native-paper';
 
 import styles from './styles';
 
-const InputText = ({ placeholder, label }: InpuTextProps) => {
+const InputText = ({
+  placeholder,
+  label,
+  type,
+  isClearable = false,
+  ...configInput
+}: InpuTextProps) => {
   const theme = useTheme();
-
-  const [inputValue, setInputValue] = useState<string>('');
-
-  const clearInputValue = () => setInputValue('');
 
   return (
     <View style={styles(theme).inputContainer}>
       <Text style={styles(theme).inputLabel}>{label}</Text>
       <View>
         <TextInput
-          keyboardType='email-address'
-          autoCapitalize='none'
-          value={inputValue}
           placeholder={placeholder}
-          onChangeText={setInputValue}
           placeholderTextColor={theme.colors.secondary}
+          keyboardType={type}
           style={styles(theme).input}
+          {...configInput}
         />
-        {inputValue.length > 0 && (
+        {configInput.value.length > 0 && (
           <TouchableRipple
             style={styles(theme).clear}
-            onPress={clearInputValue}
+            onPress={configInput.onClean}
           >
             <Text style={styles(theme).highlightedText}>Clear</Text>
           </TouchableRipple>
