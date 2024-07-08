@@ -18,7 +18,7 @@ const appSlice = createSlice({
     builder.addCase(getWatchlist.fulfilled, (state, { payload }) => {
       console.log(
         'appSlice ::: fulfilled ::: WATCHLIST:PAYLOAD ::: ',
-        payload?.result,
+        // payload?.result,
       );
     });
   },

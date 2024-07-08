@@ -1,5 +1,6 @@
-import { ApiService } from '@api/index';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
+import { ApiService } from '@api/index';
 
 export const getWatchlist = createAsyncThunk(
   'app/getWatchListStatus',
