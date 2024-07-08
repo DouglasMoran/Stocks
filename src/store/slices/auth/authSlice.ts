@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   loginWithCredentials,
   loginWithGoogle,
+  clearCurrentSesion,
   getUserToken,
-  setUserToken,
 } from '@store/slices/auth/authThunk';
 
 const initialState = {
@@ -23,33 +23,18 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUserToken.fulfilled, (state, { payload }) => {
-        console.log('getUserToken/fulfilled ::: STATE ::: ', state);
-        console.log(
-          'getUserToken/fulfilled ::: ACTION:::PAYLOAD ::: ',
-          payload,
-        );
         if (payload) {
-          state.token === payload;
+          state.token = payload;
         }
       })
-      .addCase(setUserToken.rejected, (state, action) => {
-        console.log('setUserToken/fulfilled ::: STATE ::: ', state);
-        console.log('setUserToken/rejected ::: ACTION ::: ', action);
-      })
       .addCase(loginWithCredentials.pending, (state, action) => {
-        console.log(
-          'loginWithCredentials/pending ::: INITAL STATE ::: ',
-          state.loading,
-        );
-        console.log('loginWithCredentials/pending ::: ACTION ::: ', action);
+        state.loading = 'pending';
       })
       .addCase(loginWithCredentials.fulfilled, (state, action) => {
-        console.log('loginWithCredentials/fulfilled ::: STATE ::: ', state);
-        console.log('loginWithCredentials/fulfilled ::: ACTION ::: ', action);
-        console.log(
-          'loginWithCredentials ::: INITIAL STATE TOKEN ::: ',
-          state.token,
-        );
+        if (action.payload.accessToken) {
+          state.loading = 'succeeded';
+          state.token = action.payload.accessToken;
+        }
       })
       .addCase(loginWithGoogle.pending, (state, action) => {
         console.log(
@@ -65,6 +50,13 @@ const authSlice = createSlice({
           'loginWithGoogle ::: INITIAL STATE TOKEN ::: ',
           state.token,
         );
+      })
+      .addCase(clearCurrentSesion.pending, (state, action) => {
+        state.loading = 'pending';
+      })
+      .addCase(clearCurrentSesion.fulfilled, (state, action) => {
+        state.loading = 'succeeded';
+        state.token = null;
       });
   },
 });
