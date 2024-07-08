@@ -42,6 +42,22 @@ declare global {
     labelStyle?: StyleProp<ViewStyle>;
     onPress: () => void;
   }
+
+  interface AxiosResponseAPIProps<T> {
+    errorCode: number;
+    message: string;
+    result: T | null;
+  }
+
+  interface RequestOptionsProps {
+    url: string;
+    body?: Record<string, any>;
+    token?: string;
+  }
+
+  interface AppState {
+    watchlist: any[];
+  }
 }
 
 export {};
