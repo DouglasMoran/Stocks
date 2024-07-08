@@ -1,3 +1,4 @@
+// import { resize } from '@utils/scales';
 import { StyleSheet } from 'react-native';
 
 const styles = (theme: any) =>
@@ -26,10 +27,20 @@ const styles = (theme: any) =>
     },
     inputLabel: {
       fontFamily: theme.fonts.secondary,
-      color: theme.colors.grayBase,
+      color: theme.colors.generalBlack,
     },
+    container: {},
     inputContainer: {
       gap: theme.spacing.xsmall,
+    },
+    error: {
+      fontFamily: theme.fonts.secondaryLight,
+      marginTop: theme.spacing.xxsmall,
+      color: theme.colors.alertBase,
+      fontSize: theme.spacing.small,
+    },
+    inputError: {
+      backgroundColor: theme.colors.alertLight,
     },
   });
 
