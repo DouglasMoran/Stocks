@@ -23,13 +23,8 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUserToken.fulfilled, (state, { payload }) => {
-        console.log('getUserTokenStaus/fulfilled ::: STATE ::: ', state);
-        console.log(
-          'getUserTokenStaus/fulfilled ::: ACTION:::PAYLOAD ::: ',
-          payload,
-        );
         if (payload) {
-          state.token === payload;
+          state.token = payload;
         }
       })
       .addCase(loginWithCredentials.pending, (state, action) => {
