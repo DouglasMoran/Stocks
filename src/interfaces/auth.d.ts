@@ -11,7 +11,7 @@ declare global {
 
   interface LoginResponse {
     status: string;
-    data: string;
+    accessToken: string;
   }
 
   interface AsyncThunkConfig {

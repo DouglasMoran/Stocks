@@ -31,5 +31,5 @@
     "resolveJsonModule": true,
     "isolatedModules": true
   },
-  "include": ["src", "auth.d.td", "global.d.ts", "svg.d.ts"]
+  "include": ["src", "auth.d.td", "global.d.ts", "svg.d.ts", "env.d.ts"]
 }

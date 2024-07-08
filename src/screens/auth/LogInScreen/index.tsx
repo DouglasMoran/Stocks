@@ -11,14 +11,19 @@ import Button from '@components/atoms/Button';
 
 import GoogleIcon from '@assets/icons/ic_google.svg';
 
+import { MainState } from '@store/index';
+
 import useAuth from '@hooks/useAuth';
 
 import { resize } from '@utils/scales';
 
 import styles from './styles';
+import { useSelector } from 'react-redux';
 
 const LoginScreen = () => {
   const theme = useTheme();
+
+  const token = useSelector((state: MainState) => state.auth.token);
 
   const {
     passwordInputRef,
@@ -91,6 +96,7 @@ const LoginScreen = () => {
         icon={<GoogleIcon width={resize(24)} height={resize(24)} />}
         onPress={onLoginWithGoogle}
       />
+      <Text style={{ color: '#000', fontSize: 20 }}>{token ?? '--'}</Text>
       <PowerBy />
     </Container>
   );
