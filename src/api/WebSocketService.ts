@@ -1,4 +1,7 @@
+import store from '@store/index';
+
 import { API_KEY, API_WSS_URL } from '@env';
+import { updateTrades } from '@store/slices/app/appSlice';
 
 export class WebSocketService {
   private socket: WebSocket;
@@ -29,7 +32,11 @@ export class WebSocketService {
   };
 
   private onMessage = (event: MessageEvent) => {
-    console.log('Message from server:', event.data);
+    const dataParsed = JSON.parse(event.data);
+
+    const trade: IWatchTrade = dataParsed;
+
+    store.dispatch(updateTrades(trade));
   };
 
   private onClose = (event: CloseEvent) => {

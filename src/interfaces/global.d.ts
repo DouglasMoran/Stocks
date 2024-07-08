@@ -55,8 +55,20 @@ declare global {
     token?: string;
   }
 
+  interface IDatumTrade {
+    p: number;
+    s: string;
+    t: number;
+    v: number;
+  }
+
+  interface IWatchTrade {
+    data: Datum[];
+    type: string;
+  }
+
   interface AppState {
-    watchlist: any[];
+    watchTrades: IWatchTrade[];
   }
 }
 
