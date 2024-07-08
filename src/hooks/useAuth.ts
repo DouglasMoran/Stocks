@@ -1,6 +1,9 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 
 import { TextInput } from 'react-native';
+
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 
 import { useAppDispatch } from '@store/index';
 import {
@@ -8,21 +11,26 @@ import {
   loginWithGoogle,
 } from '@store/slices/auth/authThunk';
 
+import { googleCredentialsSchema } from '@utils/validations';
+
 const useAuth = () => {
   const dispatch = useAppDispatch();
 
   const passwordInputRef = useRef<TextInput>(null);
 
-  const [passwordEntered, setPasswordEntered] = useState<string>('');
-  const [emailEntered, setEmailEntered] = useState<string>('');
+  const form = useForm<GoogleCredentials>({
+    resolver: yupResolver(googleCredentialsSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
-  const credentials = {
-    email: emailEntered,
-    password: passwordEntered,
-  } satisfies GoogleCredentials as GoogleCredentials;
+  const onCleanEmailValue = () => form.setValue('email', '');
 
-  const onLoginWithCredentials = () =>
-    dispatch(loginWithCredentials(credentials));
+  const onSubmit = form.handleSubmit((data) => {
+    dispatch(loginWithCredentials(data));
+  });
 
   const onLoginWithGoogle = () => dispatch(loginWithGoogle());
 
@@ -34,13 +42,11 @@ const useAuth = () => {
 
   return {
     passwordInputRef,
-    passwordEntered,
-    emailEntered,
-    setPasswordEntered,
-    setEmailEntered,
-    onSubmitEditing,
-    onLoginWithCredentials,
+    form,
     onLoginWithGoogle,
+    onCleanEmailValue,
+    onSubmitEditing,
+    onSubmit,
     dispatch,
   };
 };

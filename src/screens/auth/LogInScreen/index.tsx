@@ -1,6 +1,7 @@
 import { Text, View } from 'react-native';
 
 import { Divider, useTheme } from 'react-native-paper';
+import { Controller } from 'react-hook-form';
 
 import PasswordInput from '@components/atoms/forms/PasswordInput';
 import InputText from '@components/atoms/forms/InpuText';
@@ -21,13 +22,11 @@ const LoginScreen = () => {
 
   const {
     passwordInputRef,
-    passwordEntered,
-    emailEntered,
-    setPasswordEntered,
-    setEmailEntered,
-    onLoginWithCredentials,
+    form,
     onLoginWithGoogle,
+    onCleanEmailValue,
     onSubmitEditing,
+    onSubmit,
   } = useAuth();
 
   return (
@@ -36,26 +35,51 @@ const LoginScreen = () => {
         <Text style={styles(theme).title}>Welcome to Stocks-Li</Text>
       </View>
       <View style={styles(theme).formContainer}>
-        <InputText
-          label='Email address'
-          type='email-address'
-          placeholder='dev@gmail.com'
-          autoCapitalize='none'
-          blurOnSubmit={false}
-          value={emailEntered}
-          isClearable
-          onClean={() => setEmailEntered('')}
-          onChangeText={setEmailEntered}
-          onSubmitEditing={onSubmitEditing}
+        <Controller
+          control={form.control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <InputText
+              label='Email address'
+              type='email-address'
+              placeholder='dev@gmail.com'
+              returnKeyType='next'
+              autoCapitalize='none'
+              blurOnSubmit={false}
+              value={value}
+              isClearable
+              onClean={onCleanEmailValue}
+              onSubmitEditing={onSubmitEditing}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              haveError={!!form.formState.errors.email?.message}
+              error={form.formState.errors.email?.message}
+            />
+          )}
+          name='email'
         />
-        <PasswordInput
-          label='Password'
-          ref={passwordInputRef}
-          value={passwordEntered}
-          onChangeText={setPasswordEntered}
+        <Controller
+          control={form.control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <PasswordInput
+              label='Password'
+              ref={passwordInputRef}
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              haveError={!!form.formState.errors.password?.message}
+              error={form.formState.errors.password?.message}
+            />
+          )}
+          name='password'
         />
       </View>
-      <Button type='solid' label='Next' onPress={onLoginWithCredentials} />
+      <Button type='solid' label='Next' onPress={onSubmit} />
       <View style={styles(theme).dividerContainer}>
         <Divider style={styles(theme).divider} />
         <Text style={styles(theme).dividerText}>or</Text>

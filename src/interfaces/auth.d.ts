@@ -23,4 +23,5 @@ declare global {
   }
 }
 
+// Declare export like above like measure of recognize auth.d.ts like a module
 export {};

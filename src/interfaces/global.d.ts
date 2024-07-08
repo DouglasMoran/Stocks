@@ -4,6 +4,9 @@ import {
   ViewStyle,
   TextInputProps,
 } from 'react-native';
+
+import { FieldError } from 'react-hook-form';
+
 declare global {
   interface ColorProp {
     color: AppColorsType;
@@ -24,6 +27,9 @@ declare global {
     type: KeyboardTypeOptions;
     value: string;
     isClearable?: boolean;
+    isRequired?: boolean;
+    haveError?: boolean;
+    error?: string | FieldError;
     onClean?: () => void;
   }
 
