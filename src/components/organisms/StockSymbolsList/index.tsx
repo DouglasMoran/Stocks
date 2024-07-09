@@ -30,6 +30,8 @@ const StockSymbolsList = ({
       data={data}
       renderItem={renderPopularStockItem}
       contentContainerStyle={styles(theme).list}
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
     />
   );
 };

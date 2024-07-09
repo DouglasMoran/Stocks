@@ -52,7 +52,7 @@ const TradeItem = ({
       >
         <Text style={styles(theme).valuePercentage}>
           {isPositive ? '+' : '-'}
-          {percentageChange}%
+          {percentageChange ? percentageChange : '0.00'}%
         </Text>
       </View>
     </View>

@@ -27,10 +27,10 @@ const useWebSocketService = () => {
 
   useEffect(() => {
     // if (!webSocketServiceRef.current) {
-    webSocketServiceRef.current = new WebSocketService(debouncedUpdateTrades);
+    const webSocketService = new WebSocketService(debouncedUpdateTrades);
     // }
 
-    const webSocketService = webSocketServiceRef.current;
+    // const webSocketService = webSocketServiceRef.current;
 
     const symbols = ['AAPL', 'BINANCE:BTCUSDT', 'IC MARKETS:1', 'MSFT', 'AMZN'];
 

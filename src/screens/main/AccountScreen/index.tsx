@@ -32,7 +32,7 @@ const styles = (theme: any) =>
     },
     content: {
       flex: 5,
-      paddingTop: Platform.OS === 'ios' ? resize(90) : theme.spacing.xxlarge,
+      paddingTop: Platform.OS === 'ios' ? resize(70) : theme.spacing.xxlarge,
     },
     footer: {
       flex: 1,

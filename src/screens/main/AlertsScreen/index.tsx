@@ -1,6 +1,12 @@
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import {
+  FlatList,
+  ListRenderItemInfo,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 
-import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { useSelector } from 'react-redux';
 
 import PopularStockCard from '@components/templates/PopularStockCard';
@@ -42,11 +48,12 @@ const AlertsScreen = () => {
           paddingTop: Platform.OS === 'ios' ? resize(48) : resize(32),
         }}
       >
-        <FlashList
+        <FlatList
           data={watchTrades}
           renderItem={renderTradeItem}
           ItemSeparatorComponent={() => <Divider style={styles(theme).div} />}
-          estimatedItemSize={200}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
         />
       </View>
       <PopularStockCard />
@@ -57,7 +64,7 @@ const AlertsScreen = () => {
 const styles = (theme: any) =>
   StyleSheet.create({
     container: {
-      paddingTop: Platform.OS === 'ios' ? resize(90) : theme.spacing.xxlarge,
+      paddingTop: Platform.OS === 'ios' ? resize(70) : theme.spacing.xxlarge,
     },
     title: {
       fontFamily: theme.fonts.primary,

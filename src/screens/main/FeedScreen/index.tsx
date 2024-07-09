@@ -34,7 +34,7 @@ const FeedScreen = () => {
 const styles = (theme: any) =>
   StyleSheet.create({
     container: {
-      paddingTop: Platform.OS === 'ios' ? resize(90) : theme.spacing.xxlarge,
+      paddingTop: Platform.OS === 'ios' ? resize(70) : theme.spacing.xxlarge,
     },
     title: {
       fontFamily: theme.fonts.primary,
