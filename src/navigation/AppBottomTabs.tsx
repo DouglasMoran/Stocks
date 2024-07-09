@@ -22,8 +22,7 @@ const AppBottomTabs = () => {
         component={FeedScreen}
         options={{
           title: 'Feed',
-          tabBarIcon: ({ focused, color }) =>
-            focused ? <ShapeIcon /> : <Icon name='shape' />,
+          tabBarIcon: ({ focused, color }) => (focused ? <ShapeIcon /> : null),
         }}
       />
       <AppBottomTab.Screen
@@ -31,8 +30,7 @@ const AppBottomTabs = () => {
         component={AlertsScreen}
         options={{
           title: 'Alerts',
-          tabBarIcon: ({ focused, color }) =>
-            focused ? <TrendIcon /> : <Icon name='trend' />,
+          tabBarIcon: ({ focused, color }) => (focused ? <TrendIcon /> : null),
         }}
       />
       <AppBottomTab.Screen
@@ -40,8 +38,7 @@ const AppBottomTabs = () => {
         component={SearchScreen}
         options={{
           title: 'Search',
-          tabBarIcon: ({ focused, color }) =>
-            focused ? <SearchIcon /> : <Icon name='search' />,
+          tabBarIcon: ({ focused, color }) => (focused ? <SearchIcon /> : null),
         }}
       />
       <AppBottomTab.Screen
@@ -50,7 +47,7 @@ const AppBottomTabs = () => {
         options={{
           title: 'Account',
           tabBarIcon: ({ focused, color }) =>
-            focused ? <AccountIcon /> : <Icon name='user' />,
+            focused ? <AccountIcon /> : null,
         }}
       />
     </AppBottomTab.Navigator>

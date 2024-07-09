@@ -40,6 +40,8 @@ declare global {
     iconRight?: boolean;
     color?: string;
     labelStyle?: StyleProp<ViewStyle>;
+    containerStyle?: StyleProp<ViewStyle>;
+    contentContainerStyle?: StyleProp<ViewStyle>;
     onPress: () => void;
   }
 
@@ -67,9 +69,20 @@ declare global {
     type: string;
   }
 
+  interface IStockSymbol {
+    currency: string;
+    description: string;
+    displaySymbol: string;
+    figi: string;
+    mic: string;
+    symbol: string;
+    type: string;
+  }
+
   interface AppState {
     watchTrades: IDatumTrade[];
     previousPrices: { [symbol: string]: number };
+    popularStockSymbols: IStockSymbol[];
   }
 }
 

@@ -21,6 +21,9 @@ const Button = ({
   iconRight,
   color,
   type,
+  contentContainerStyle,
+  containerStyle,
+  labelStyle,
   onPress,
 }: ButtonProps): JSX.Element => {
   const theme = useTheme();
@@ -43,7 +46,13 @@ const Button = ({
   };
 
   return (
-    <View style={[styles(theme).outerButtonContainer, cBtnStyle.button]}>
+    <View
+      style={[
+        styles(theme).outerButtonContainer,
+        cBtnStyle.button,
+        contentContainerStyle,
+      ]}
+    >
       <TouchableNativeFeedback
         background={TouchableNativeFeedback.Ripple(
           theme.colors.surfaceVariant,
@@ -52,7 +61,7 @@ const Button = ({
         style={styles(theme).touchable}
         onPress={onPress}
       >
-        <View style={styles(theme).button}>
+        <View style={[styles(theme).button, containerStyle]}>
           {!!icon && (
             <View
               style={[
@@ -63,7 +72,7 @@ const Button = ({
               {icon}
             </View>
           )}
-          <Text style={[styles(theme).buttonText, cBtnStyle.label]}>
+          <Text style={[styles(theme).buttonText, cBtnStyle.label, labelStyle]}>
             {label}
           </Text>
         </View>

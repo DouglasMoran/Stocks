@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { getWatchlist } from '@store/slices/app/appThunk';
+import { getStockSymbols, getStockProfile } from '@store/slices/app/appThunk';
 
 const initialState = {
   watchTrades: [],
   previousPrices: {},
+  popularStockSymbols: [],
 } satisfies AppState as AppState;
 
 const appSlice = createSlice({
@@ -130,15 +131,14 @@ const appSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getWatchlist.rejected, (state, action) => {
-      // console.log('appSlice ::: rejected ::: STATE ::: ', state);
-      console.log('appSlice ::: rejected ::: WATCHLIST:REJECT ::: ', action);
+    builder.addCase(getStockSymbols.fulfilled, (state, { payload }) => {
+      if (Array.isArray(payload?.result) && payload.result.length > 0) {
+        const populars = payload?.result.slice(0, 3);
+        state.popularStockSymbols = populars;
+      }
     });
-    builder.addCase(getWatchlist.fulfilled, (state, { payload }) => {
-      console.log(
-        'appSlice ::: fulfilled ::: WATCHLIST:PAYLOAD ::: ',
-        // payload?.result,
-      );
+    builder.addCase(getStockProfile.fulfilled, (state, { payload }) => {
+      console.log('appSlice ::: fulfilled ::: getStockProfile ::: ', payload);
     });
   },
 });

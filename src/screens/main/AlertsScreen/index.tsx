@@ -28,8 +28,8 @@ const AlertsScreen = () => {
   );
 
   return (
-    <Container>
-      <Text style={styles(theme).title}>Watch trades list</Text>
+    <Container containerStyle={styles(theme).container}>
+      <Text style={styles(theme).title}>Watchlist</Text>
       <FlashList
         data={watchTrades}
         renderItem={renderTradeItem}
@@ -42,6 +42,9 @@ const AlertsScreen = () => {
 
 const styles = (theme: any) =>
   StyleSheet.create({
+    container: {
+      paddingTop: theme.spacing.xxxlarge,
+    },
     title: {
       fontFamily: theme.fonts.primary,
       color: theme.colors.primaryBase,
