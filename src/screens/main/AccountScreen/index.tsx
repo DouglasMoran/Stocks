@@ -32,7 +32,7 @@ const styles = (theme: any) =>
     },
     content: {
       flex: 5,
-      paddingTop: theme.spacing.xlarge,
+      paddingTop: theme.spacing.xxlarge,
     },
     footer: {
       flex: 1,

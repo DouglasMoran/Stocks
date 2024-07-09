@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 
 import StockSymbolsList from '@components/organisms/StockSymbolsList';
@@ -15,6 +16,8 @@ import { useTheme } from 'react-native-paper';
 const PopularStockCard = (): JSX.Element => {
   const theme = useTheme();
 
+  const navigation = useNavigation<any>();
+
   const popularStocks = useSelector(
     (state: MainState) => state.app.popularStockSymbols,
   );
@@ -24,9 +27,9 @@ const PopularStockCard = (): JSX.Element => {
       <LabelTextButton
         label='🔥 Follow popular'
         labelButton='Stocks'
-        onPress={() => {}}
+        onPress={() => navigation.navigate('FeedScreen')}
       />
-      <StockSymbolsList type='primary' data={popularStocks} />
+      <StockSymbolsList type='secondary' data={popularStocks} />
     </Card>
   );
 };

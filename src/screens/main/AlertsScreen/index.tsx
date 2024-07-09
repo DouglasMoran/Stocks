@@ -54,7 +54,7 @@ const AlertsScreen = () => {
 const styles = (theme: any) =>
   StyleSheet.create({
     container: {
-      paddingTop: theme.spacing.xxxlarge,
+      paddingTop: theme.spacing.xxlarge,
     },
     title: {
       fontFamily: theme.fonts.primary,

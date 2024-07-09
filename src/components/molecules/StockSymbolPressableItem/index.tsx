@@ -25,8 +25,8 @@ const StockSymbolPressableItem = ({
           <Text style={styles(theme).description}>{description}</Text>
         </View>
         <View style={[styles(theme).container, styles(theme).leftContainer]}>
-          <Text style={styles(theme).symbol}>{currency}</Text>
-          <Text style={styles(theme).description}>{displaySymbol}</Text>
+          <Text style={styles(theme).symbol}>{mic}</Text>
+          <Text style={styles(theme).description}>{figi}</Text>
         </View>
       </View>
     </Touchable>

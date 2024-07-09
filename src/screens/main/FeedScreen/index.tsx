@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 
 import { useSelector } from 'react-redux';
 
@@ -34,7 +34,7 @@ const FeedScreen = () => {
 const styles = (theme: any) =>
   StyleSheet.create({
     container: {
-      paddingTop: theme.spacing.xxxlarge,
+      paddingTop: theme.spacing.xxlarge,
     },
     title: {
       fontFamily: theme.fonts.primary,

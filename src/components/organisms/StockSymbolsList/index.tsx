@@ -1,6 +1,4 @@
-import { StyleSheet } from 'react-native';
-
-import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
+import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
 
 import StockSymbolPressableItem from '@components/molecules/StockSymbolPressableItem';
 import StockSymbolItem from '@components/molecules/StockSymbolItem';
@@ -28,11 +26,10 @@ const StockSymbolsList = ({
   );
 
   return (
-    <FlashList
+    <FlatList
       data={data}
       renderItem={renderPopularStockItem}
-      style={styles(theme).list}
-      estimatedItemSize={300}
+      contentContainerStyle={styles(theme).list}
     />
   );
 };
@@ -40,7 +37,7 @@ const StockSymbolsList = ({
 const styles = (theme: any) =>
   StyleSheet.create({
     list: {
-      gap: theme.spacing.small,
+      gap: theme.spacing.medium,
     },
   });
 
