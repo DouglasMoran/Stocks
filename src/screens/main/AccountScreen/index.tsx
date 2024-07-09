@@ -17,7 +17,7 @@ const AccountScreen = () => {
         <Text style={styles(theme).title}>Account Screen</Text>
       </View>
       <View style={styles(theme).footer}>
-        <Button label='Sign our' type='solid' onPress={onSignout} />
+        <Button label='Sign out' type='solid' onPress={onSignout} />
       </View>
     </Container>
   );

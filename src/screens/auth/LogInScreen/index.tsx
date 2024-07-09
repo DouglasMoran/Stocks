@@ -22,6 +22,7 @@ const LoginScreen = () => {
 
   const {
     passwordInputRef,
+    errorMessage,
     form,
     onLoginWithGoogle,
     onCleanEmailValue,
@@ -78,8 +79,11 @@ const LoginScreen = () => {
           )}
           name='password'
         />
+        {!!errorMessage && (
+          <Text style={styles(theme).error}>{errorMessage}</Text>
+        )}
       </View>
-      <Button type='solid' label='Next' onPress={onSubmit} />
+      <Button type='solid' label='Sign in' onPress={onSubmit} />
       <View style={styles(theme).dividerContainer}>
         <Divider style={styles(theme).divider} />
         <Text style={styles(theme).dividerText}>or</Text>

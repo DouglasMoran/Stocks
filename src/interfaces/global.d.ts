@@ -68,7 +68,8 @@ declare global {
   }
 
   interface AppState {
-    watchTrades: IWatchTrade[];
+    watchTrades: IDatumTrade[];
+    previousPrices: { [symbol: string]: number };
   }
 }
 

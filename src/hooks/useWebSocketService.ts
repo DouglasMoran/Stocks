@@ -6,7 +6,15 @@ const useWebSocketService = () => {
   useEffect(() => {
     const webSocketService = new WebSocketService();
 
-    const symbols = ['AAPL', 'BINANCE:BTCUSDT', 'IC MARKETS:1'];
+    const symbols = [
+      'AAPL',
+      'BINANCE:BTCUSDT',
+      'IC MARKETS:1',
+      'EXCOF',
+      'UPOW',
+      'HLNFF',
+      'PRKWF',
+    ];
 
     symbols.forEach((symbol) => webSocketService.subscribe(symbol));
 
