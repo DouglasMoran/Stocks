@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import Button from '@components/atoms/Button';
 
-import { resize } from '@utils/scales';
-
 import { useTheme } from 'react-native-paper';
+
+import { styles } from './styles';
 
 const StockSymbolItem = ({
   symbol,
@@ -13,38 +13,16 @@ const StockSymbolItem = ({
   const theme = useTheme();
 
   return (
-    <View style={styles(theme).itemContainer}>
-      <View style={styles(theme).itemLeftContainer}>
+    <View style={styles(theme).contentContainer}>
+      <View style={styles(theme).container}>
         <Text style={styles(theme).symbol}>{symbol}</Text>
-        <Text style={styles(theme).symbolDescription}>{description}</Text>
+        <Text style={styles(theme).description}>{description}</Text>
       </View>
-      <View style={styles(theme).itemRightContainer}>
+      <View>
         <Button label='Add' type='outline' onPress={() => {}} />
       </View>
     </View>
   );
 };
-
-const styles = (theme: any) =>
-  StyleSheet.create({
-    itemContainer: {
-      flexDirection: 'row',
-      flex: 1,
-    },
-    itemLeftContainer: {
-      flex: 1,
-    },
-    itemRightContainer: {},
-    symbol: {
-      fontFamily: theme.fonts.secondaryMedium,
-      color: theme.colors.generalBlack,
-      fontSize: resize(18),
-    },
-    symbolDescription: {
-      fontFamily: theme.fonts.secondaryLight,
-      color: theme.colors.generalBlack,
-      fontSize: resize(14),
-    },
-  });
 
 export default StockSymbolItem;

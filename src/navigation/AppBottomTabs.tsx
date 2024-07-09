@@ -29,7 +29,7 @@ const AppBottomTabs = () => {
         name='AlertsScreen'
         component={AlertsScreen}
         options={{
-          title: 'Alerts',
+          title: 'Watchlist',
           tabBarIcon: ({ focused, color }) => (focused ? <TrendIcon /> : null),
         }}
       />

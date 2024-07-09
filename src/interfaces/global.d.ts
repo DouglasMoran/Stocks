@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   KeyboardTypeOptions,
   StyleProp,
@@ -45,6 +47,14 @@ declare global {
     onPress: () => void;
   }
 
+  interface TouchableProps {
+    children: React.ReactNode;
+    rippleColor?: string;
+    containerStyle?: StyleProp<ViewStyle>;
+    touchableStyle?: StyleProp<ViewStyle>;
+    onPress: () => void;
+  }
+
   interface AxiosResponseAPIProps<T> {
     errorCode: number;
     message: string;
@@ -83,7 +93,10 @@ declare global {
     watchTrades: IDatumTrade[];
     previousPrices: { [symbol: string]: number };
     popularStockSymbols: IStockSymbol[];
+    stockSymbols: IStockSymbol[];
   }
+
+  type StockSymbolItemType = 'primary' | 'secondary';
 }
 
 export {};

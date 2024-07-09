@@ -6,6 +6,7 @@ const initialState = {
   watchTrades: [],
   previousPrices: {},
   popularStockSymbols: [],
+  stockSymbols: [],
 } satisfies AppState as AppState;
 
 const appSlice = createSlice({
@@ -133,8 +134,10 @@ const appSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getStockSymbols.fulfilled, (state, { payload }) => {
       if (Array.isArray(payload?.result) && payload.result.length > 0) {
-        const populars = payload?.result.slice(0, 3);
+        const symbols = payload?.result;
+        const populars = symbols.slice(0, 3);
         state.popularStockSymbols = populars;
+        state.stockSymbols = symbols;
       }
     });
     builder.addCase(getStockProfile.fulfilled, (state, { payload }) => {

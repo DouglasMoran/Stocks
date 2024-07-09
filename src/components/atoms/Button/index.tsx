@@ -1,10 +1,4 @@
-import {
-  Text,
-  View,
-  TouchableNativeFeedback,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
+import { Text, View, StyleProp, ViewStyle } from 'react-native';
 
 import { useTheme } from 'react-native-paper';
 
@@ -14,6 +8,7 @@ import {
   buttonSolidStyle,
   buttonTextStyle,
 } from '@commons/styles';
+import Touchable from '../Touchable';
 
 const Button = ({
   label,
@@ -46,38 +41,26 @@ const Button = ({
   };
 
   return (
-    <View
-      style={[
-        styles(theme).outerButtonContainer,
-        cBtnStyle.button,
-        contentContainerStyle,
-      ]}
+    <Touchable
+      containerStyle={[cBtnStyle.button, contentContainerStyle]}
+      onPress={onPress}
     >
-      <TouchableNativeFeedback
-        background={TouchableNativeFeedback.Ripple(
-          theme.colors.surfaceVariant,
-          false,
+      <View style={[styles(theme).button, containerStyle]}>
+        {!!icon && (
+          <View
+            style={[
+              styles(theme).iconContainer,
+              iconRight && iconPositionStyle,
+            ]}
+          >
+            {icon}
+          </View>
         )}
-        style={styles(theme).touchable}
-        onPress={onPress}
-      >
-        <View style={[styles(theme).button, containerStyle]}>
-          {!!icon && (
-            <View
-              style={[
-                styles(theme).iconContainer,
-                iconRight && iconPositionStyle,
-              ]}
-            >
-              {icon}
-            </View>
-          )}
-          <Text style={[styles(theme).buttonText, cBtnStyle.label, labelStyle]}>
-            {label}
-          </Text>
-        </View>
-      </TouchableNativeFeedback>
-    </View>
+        <Text style={[styles(theme).buttonText, cBtnStyle.label, labelStyle]}>
+          {label}
+        </Text>
+      </View>
+    </Touchable>
   );
 };
 

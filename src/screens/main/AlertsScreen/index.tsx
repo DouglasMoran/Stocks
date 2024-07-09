@@ -1,7 +1,9 @@
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { useSelector } from 'react-redux';
+
+import PopularStockCard from '@components/templates/PopularStockCard';
 
 import TradeItem from '@components/molecules/TradeItem';
 
@@ -27,6 +29,15 @@ const AlertsScreen = () => {
     <TradeItem previousPrice={previousPrices[item.s]} {...item} />
   );
 
+  return (
+    <Container containerStyle={styles(theme).container}>
+      <Text style={styles(theme).title}>My favorite watchlist</Text>
+      <View style={{ flex: 1 }}>
+        <Text>Test</Text>
+      </View>
+      <PopularStockCard />
+    </Container>
+  );
   return (
     <Container containerStyle={styles(theme).container}>
       <Text style={styles(theme).title}>Watchlist</Text>

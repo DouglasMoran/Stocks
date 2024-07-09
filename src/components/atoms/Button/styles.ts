@@ -4,11 +4,6 @@ import { resize } from '@utils/scales';
 
 const styles = (theme: any) =>
   StyleSheet.create({
-    outerButtonContainer: {
-      backgroundColor: theme.colors.primary,
-      borderRadius: theme.spacing.small,
-      overflow: 'hidden',
-    },
     button: {
       paddingHorizontal: theme.spacing.medium,
       paddingVertical: theme.spacing.xsmall,

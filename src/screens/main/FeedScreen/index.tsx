@@ -1,26 +1,32 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import { useTheme } from 'react-native-paper';
+import { useSelector } from 'react-redux';
+
+import StockSymbolsList from '@components/organisms/StockSymbolsList';
 
 import Container from '@components/atoms/Container';
 
 import useStocks from '@hooks/useStocks';
 
+import { MainState } from '@store/index';
+
 import { resize } from '@utils/scales';
-import PopularStockCard from '@components/templates/PopularStockCard';
+
+import { useTheme } from 'react-native-paper';
 
 const FeedScreen = () => {
   const theme = useTheme();
+
+  const stockSymbols = useSelector(
+    (state: MainState) => state.app.stockSymbols,
+  );
 
   useStocks();
 
   return (
     <Container containerStyle={styles(theme).container}>
-      <Text style={styles(theme).title}>My favorite watchlist</Text>
-      <View style={{ flex: 1 }}>
-        <Text>Test</Text>
-      </View>
-      <PopularStockCard />
+      <Text style={styles(theme).title}>Stock symbols</Text>
+      <StockSymbolsList type='primary' data={stockSymbols} />
     </Container>
   );
 };
