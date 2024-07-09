@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { useSelector } from 'react-redux';
@@ -8,6 +8,8 @@ import PopularStockCard from '@components/templates/PopularStockCard';
 import TradeItem from '@components/molecules/TradeItem';
 
 import Container from '@components/atoms/Container';
+
+import useWebSocketService from '@hooks/useWebSocketService';
 
 import { MainState } from '@store/index';
 
@@ -23,30 +25,31 @@ const AlertsScreen = () => {
     (state: MainState) => state.app.previousPrices,
   );
 
+  useWebSocketService();
+
   const renderTradeItem = ({
     item,
   }: ListRenderItemInfo<IDatumTrade>): JSX.Element => (
-    <TradeItem previousPrice={previousPrices[item.s]} {...item} />
+    <TradeItem key={item.s} previousPrice={previousPrices[item.s]} {...item} />
   );
 
   return (
     <Container containerStyle={styles(theme).container}>
       <Text style={styles(theme).title}>My favorite watchlist</Text>
-      <View style={{ flex: 1 }}>
-        <Text>Test</Text>
+      <View
+        style={{
+          flex: 1,
+          paddingTop: Platform.OS === 'ios' ? resize(48) : resize(32),
+        }}
+      >
+        <FlashList
+          data={watchTrades}
+          renderItem={renderTradeItem}
+          ItemSeparatorComponent={() => <Divider style={styles(theme).div} />}
+          estimatedItemSize={200}
+        />
       </View>
       <PopularStockCard />
-    </Container>
-  );
-  return (
-    <Container containerStyle={styles(theme).container}>
-      <Text style={styles(theme).title}>Watchlist</Text>
-      <FlashList
-        data={watchTrades}
-        renderItem={renderTradeItem}
-        ItemSeparatorComponent={() => <Divider style={styles(theme).div} />}
-        estimatedItemSize={200}
-      />
     </Container>
   );
 };
@@ -54,7 +57,7 @@ const AlertsScreen = () => {
 const styles = (theme: any) =>
   StyleSheet.create({
     container: {
-      paddingTop: theme.spacing.xxlarge,
+      paddingTop: Platform.OS === 'ios' ? resize(90) : theme.spacing.xxlarge,
     },
     title: {
       fontFamily: theme.fonts.primary,

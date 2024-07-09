@@ -1,7 +1,4 @@
-import store from '@store/index';
-
 import { API_KEY, API_WSS_URL } from '@env';
-import { updateTrades } from '@store/slices/app/appSlice';
 
 export class WebSocketService {
   private socket: WebSocket;
@@ -10,8 +7,11 @@ export class WebSocketService {
   private messageQueue: string[] = [];
   private isConnected: boolean = false;
 
-  constructor() {
+  private debouncedUpdateTrades: (trades: IDatumTrade[]) => void;
+
+  constructor(debouncedUpdateTrades: (trades: IDatumTrade[]) => void) {
     this.url = `${API_WSS_URL}?token=${this.token}`;
+    this.debouncedUpdateTrades = debouncedUpdateTrades;
     this.initialize();
   }
 
@@ -24,7 +24,6 @@ export class WebSocketService {
   }
 
   private onOpen = (event: Event) => {
-    console.log('WebSocket connection opened:', event);
     this.isConnected = true;
 
     this.messageQueue.forEach((message) => this.socket.send(message));
@@ -32,31 +31,24 @@ export class WebSocketService {
   };
 
   private onMessage = (event: MessageEvent) => {
-    const dataParsed = JSON.parse(event.data);
+    if (event.data) {
+      const dataParsed = JSON.parse(event.data);
 
-    const trade: IWatchTrade = dataParsed;
+      const trade: IWatchTrade = dataParsed;
 
-    store.dispatch(updateTrades(trade));
+      this.debouncedUpdateTrades(trade.data);
+    }
   };
 
   private onClose = (event: CloseEvent) => {
-    console.log('WebSocket connection closed:', event);
     this.isConnected = false;
-    this.reconnect();
+    // this.reconnect();
   };
 
   private onError = (event: Event) => {
-    console.error('WebSocket error:', event);
     this.isConnected = false;
-    this.reconnect();
+    // this.reconnect();
   };
-
-  private reconnect() {
-    console.log('Reconnecting...');
-    setTimeout(() => {
-      this.initialize();
-    }, 5000);
-  }
 
   public subscribe(symbol: string) {
     const message = JSON.stringify({ type: 'subscribe', symbol });
@@ -64,7 +56,6 @@ export class WebSocketService {
       this.socket.send(message);
     } else {
       this.messageQueue.push(message);
-      console.log('WebSocket is not in OPEN state to send data.');
     }
   }
 
@@ -74,7 +65,6 @@ export class WebSocketService {
       this.socket.send(message);
     } else {
       this.messageQueue.push(message);
-      console.log('WebSocket is not in OPEN state to send data.');
     }
   }
 

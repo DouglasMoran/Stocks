@@ -11245,6 +11245,7 @@ __metadata:
     react-redux: ^9.1.2
     react-test-renderer: 18.2.0
     typescript: 5.0.4
+    use-debounce: ^10.0.1
     yup: ^1.4.0
   languageName: unknown
   linkType: soft
@@ -11987,6 +11988,15 @@ __metadata:
     punycode: ^1.4.1
     qs: ^6.11.2
   checksum: f9e7886f46a16f96d2e42fbcc5d682c231c55ef5442c1ff66150c0f6556f6e3a97d094a84f51be15ec2432711d212eb60426659ce418f5fcadeaa3f601532c4e
+  languageName: node
+  linkType: hard
+
+"use-debounce@npm:^10.0.1":
+  version: 10.0.1
+  resolution: "use-debounce@npm:10.0.1"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 6b53d2b9b1856bacfa4dffd78234bba744792e1d75c194af0642faf1ac2914ebdcc770ac23b7e59ca999f997d969edf3c75d22362879818927d20d3408dd59db
   languageName: node
   linkType: hard
 

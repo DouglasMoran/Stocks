@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 
 import Container from '@components/atoms/Container';
 import { useTheme } from 'react-native-paper';
@@ -32,7 +32,7 @@ const styles = (theme: any) =>
     },
     content: {
       flex: 5,
-      paddingTop: theme.spacing.xxlarge,
+      paddingTop: Platform.OS === 'ios' ? resize(90) : theme.spacing.xxlarge,
     },
     footer: {
       flex: 1,

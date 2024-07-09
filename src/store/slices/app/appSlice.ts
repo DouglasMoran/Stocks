@@ -28,122 +28,36 @@ const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    updateTrades: (state, action: PayloadAction<IWatchTrade>) => {
-      action.payload.data.forEach((newTrade) => {
-        const previousPrice = state.previousPrices[newTrade.s] || newTrade.p;
-        state.previousPrices[newTrade.s] = newTrade.p;
+    updateTrades: (state, { payload: trade }: PayloadAction<IDatumTrade[]>) => {
+      console.log('*******************************');
 
-        const index = state.watchTrades.findIndex(
-          (trade) => trade.s === newTrade.s,
-        );
-        if (index >= 0) {
-          // Update existing trade
-          state.watchTrades[index] = newTrade;
-        } else {
-          // Add new trade
-          state.watchTrades.push(newTrade);
-        }
-      });
+      if (Array.isArray(trade) && trade.length > 0) {
+        // console.log('ADD THIS TRADE ::: LENGTH ::: ', trade.length);
+        // console.log('ADD THIS TRADE TO WATCHLIST ::: ', trade);
+        trade.forEach((trade) => {
+          const index = state.watchTrades.findIndex(
+            (item) => item.s === trade.s,
+          );
 
-      // console.log('*************');
-      // // console.log('updateTrades ::: STATE ::: ', state);
-      // console.log('updateTrades ::: ACTION:::PAYLOAD ::: ', action.payload);
+          if (index !== -1) {
+            // Update existing trade
+            state.watchTrades[index] = trade;
+            // console.log(
+            //   '::::: state.watchTrades[index] ::::: ',
+            //   state.watchTrades[index],
+            // );
+          } else {
+            // Add new trade
+            // console.log('WATCHTRADES LENGTH ::: ', state.watchTrades.length);
+            // console.log('THIS ONE WILL BE ADD ::: ', trade);
+            // state.watchTrades.push(trade);
+            state.watchTrades = state.watchTrades.concat(trade);
+          }
+        });
+        return;
+      }
 
-      // const trade = action.payload.data;
-
-      // const isWatchlistEmpty = state.watchTrades.length === 0;
-
-      // if (Array.isArray(trade) && trade.length > 0) {
-      //   if (isWatchlistEmpty) {
-      //     state.watchTrades = state.watchTrades.concat(trade);
-      //     return;
-      //   }
-
-      //   // const watchlistSymbols = state.watchTrades.map(
-      //   //   (item: IDatumTrade) => item.s,
-      //   // );
-      //   // console.log('WATCHLIST SYMBOLS LIST ::: ', watchlistSymbols);
-      //   trade.forEach((cTrade: IDatumTrade) => {
-      //     const tradePosition = state.watchTrades.findIndex(
-      //       (t: IDatumTrade) => t.s === cTrade.s,
-      //     );
-
-      //     if (tradePosition >= 0) {
-      //       state.watchTrades[tradePosition] = cTrade;
-      //     }
-
-      //     if (tradePosition < 0) {
-      //       console.log('NEW SYMBOL ::: TRADE POSITION ::: ', tradePosition);
-      //       console.log(
-      //         'NEW SYMBOL ::: CURRENT TRADE UPDATED ::: ',
-      //         cTrade.s,
-      //         // state.watchTrades,
-      //       );
-      //     }
-      //   });
-      // }
-
-      // if (Array.isArray(state.watchTrades) && state.watchTrades.length === 0) {
-      //   state.watchTrades = state.watchTrades.concat(trade);
-      //   console.log('ADD THE FIRST TRADE!! ', state.watchTrades[0].data);
-      //   return;
-      // }
-
-      // if (Array.isArray(trade.data) && trade.data.length > 0) {
-      //   // console.log('CURRENTLY 1 TRADE ADDED ::: ', state.watchTrades.length);
-      //   // console.log('LOGIC TO HANDLE ADD AND UPDATE TRADES ::: ', trade);
-      //   action.payload.data.forEach((newTrade) => {
-      //     let tradeUpdated = false;
-
-      //     state.watchTrades.forEach((watchTrade) => {
-      //       const index = watchTrade.data.findIndex(
-      //         (trade: IDatumTrade) => trade.s === newTrade.s,
-      //       );
-      //       if (index >= 0) {
-      //         // Update existing trade in the data array
-      //         watchTrade.data[index] = newTrade;
-      //         tradeUpdated = true;
-      //       }
-      //     });
-
-      //     if (!tradeUpdated) {
-      //       // If no matching trade found, add the new trade to the first watchTrade or create a new watchTrade entry
-      //       if (state.watchTrades.length > 0) {
-      //         state.watchTrades[0].data.push(newTrade);
-      //       } else {
-      //         state.watchTrades.push({
-      //           data: [newTrade],
-      //           type: action.payload.type,
-      //         });
-      //       }
-      //     }
-      //   });
-      // }
-
-      // updatedTrade.data.forEach((newTrade: IDatumTrade) => {
-      //   let tradeUpdated = false;
-      //   state.watchTrades.forEach((watchTrade: IWatchTrade) => {
-      //     const index = watchTrade.data.findIndex(
-      //       (datumTrade: IDatumTrade) => datumTrade.s === newTrade.s,
-      //     );
-
-      //     if (index >= 0) {
-      //       watchTrade.data[index] = newTrade;
-      //       tradeUpdated = true;
-      //     }
-      //   });
-
-      //   if (!tradeUpdated) {
-      //     if (state.watchTrades.length > 0) {
-      //       state.watchTrades[0].data.push(newTrade);
-      //     } else {
-      //       state.watchTrades.push({
-      //         data: [newTrade],
-      //         type: action.payload.type,
-      //       });
-      //     }
-      //   }
-      // });
+      // console.log('IS TREND EMPTY ::: ', typeof trade, trade);
     },
     watchStockSymbol: (
       state,
