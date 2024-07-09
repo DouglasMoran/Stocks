@@ -87,6 +87,7 @@ declare global {
     mic: string;
     symbol: string;
     type: string;
+    isWatched?: boolean;
   }
 
   interface AppState {

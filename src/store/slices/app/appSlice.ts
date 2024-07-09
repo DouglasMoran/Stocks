@@ -9,6 +9,21 @@ const initialState = {
   stockSymbols: [],
 } satisfies AppState as AppState;
 
+const toggleIsWatched = (
+  stockSymbols: IStockSymbol[],
+  symbol: string,
+): IStockSymbol[] => {
+  return stockSymbols.map((prevStock: IStockSymbol) => {
+    if (prevStock.symbol === symbol) {
+      return {
+        ...prevStock,
+        isWatched: !prevStock.isWatched,
+      };
+    }
+    return prevStock;
+  });
+};
+
 const appSlice = createSlice({
   name: 'app',
   initialState,
@@ -130,6 +145,28 @@ const appSlice = createSlice({
       //   }
       // });
     },
+    watchStockSymbol: (
+      state,
+      {
+        payload: { symbol, type },
+      }: PayloadAction<{ type: 'popular' | 'stocks'; symbol: string }>,
+    ) => {
+      if (!!symbol) {
+        if (type === 'popular') {
+          const updatedPopularStockSymbols = toggleIsWatched(
+            state.popularStockSymbols,
+            symbol,
+          );
+
+          state.popularStockSymbols = updatedPopularStockSymbols;
+          return;
+        }
+
+        const updatedStockSymbols = toggleIsWatched(state.stockSymbols, symbol);
+
+        state.stockSymbols = updatedStockSymbols;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getStockSymbols.fulfilled, (state, { payload }) => {
@@ -146,6 +183,6 @@ const appSlice = createSlice({
   },
 });
 
-export const { updateTrades } = appSlice.actions;
+export const { updateTrades, watchStockSymbol } = appSlice.actions;
 
 export default appSlice.reducer;
