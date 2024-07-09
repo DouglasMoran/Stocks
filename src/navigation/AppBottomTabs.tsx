@@ -7,6 +7,11 @@ import AlertsScreen from '@screens/main/AlertsScreen';
 import SearchScreen from '@screens/main/SearchScreen';
 import FeedScreen from '@screens/main/FeedScreen';
 
+import ShapeIcon from '@assets/icons/ic_shape_solid.svg';
+import TrendIcon from '@assets/icons/ic_arrow_trend_up_solid.svg';
+import SearchIcon from '@assets/icons/ic_search_solid.svg';
+import AccountIcon from '@assets/icons/ic_user_solid.svg';
+
 const AppBottomTab = createMaterialBottomTabNavigator();
 
 const AppBottomTabs = () => {
@@ -17,7 +22,8 @@ const AppBottomTabs = () => {
         component={FeedScreen}
         options={{
           title: 'Feed',
-          tabBarIcon: ({ color }) => <Icon name='home' color={color} />,
+          tabBarIcon: ({ focused, color }) =>
+            focused ? <ShapeIcon /> : <Icon name='shape' />,
         }}
       />
       <AppBottomTab.Screen
@@ -25,7 +31,8 @@ const AppBottomTabs = () => {
         component={AlertsScreen}
         options={{
           title: 'Alerts',
-          tabBarIcon: ({ color }) => <Icon name='bell' color={color} />,
+          tabBarIcon: ({ focused, color }) =>
+            focused ? <TrendIcon /> : <Icon name='trend' />,
         }}
       />
       <AppBottomTab.Screen
@@ -33,7 +40,8 @@ const AppBottomTabs = () => {
         component={SearchScreen}
         options={{
           title: 'Search',
-          tabBarIcon: ({ color }) => <Icon name='search' color={color} />,
+          tabBarIcon: ({ focused, color }) =>
+            focused ? <SearchIcon /> : <Icon name='search' />,
         }}
       />
       <AppBottomTab.Screen
@@ -41,7 +49,8 @@ const AppBottomTabs = () => {
         component={AccountScreen}
         options={{
           title: 'Account',
-          tabBarIcon: ({ color }) => <Icon name='user' color={color} />,
+          tabBarIcon: ({ focused, color }) =>
+            focused ? <AccountIcon /> : <Icon name='user' />,
         }}
       />
     </AppBottomTab.Navigator>
