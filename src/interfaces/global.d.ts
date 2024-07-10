@@ -91,10 +91,13 @@ declare global {
   }
 
   interface AppState {
+    symbolWatches: string[];
     watchTrades: IDatumTrade[];
     previousPrices: { [symbol: string]: number };
-    popularStockSymbols: IStockSymbol[];
+    popularStockSymbols: string[];
     stockSymbols: IStockSymbol[];
+    webSocketServiceRef: WebSocketService | null;
+    isLoadingStockSymbols: 'idle' | 'pending' | 'succeeded' | 'failed';
   }
 
   type StockSymbolItemType = 'primary' | 'secondary';

@@ -4,7 +4,7 @@ import { useTheme } from 'react-native-paper';
 
 type CardProps = {
   children: React.ReactNode;
-  contentStyles: StyleProp<ViewStyle>;
+  contentStyles?: StyleProp<ViewStyle>;
 };
 
 const Card = ({ children, contentStyles }: CardProps): JSX.Element => {

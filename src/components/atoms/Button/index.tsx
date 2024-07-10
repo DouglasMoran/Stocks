@@ -45,7 +45,13 @@ const Button = ({
       containerStyle={[cBtnStyle.button, contentContainerStyle]}
       onPress={onPress}
     >
-      <View style={[styles(theme).button, containerStyle]}>
+      <View
+        style={[
+          styles(theme).button,
+          containerStyle,
+          !!color && { backgroundColor: color },
+        ]}
+      >
         {!!icon && (
           <View
             style={[

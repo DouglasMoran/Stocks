@@ -1,7 +1,12 @@
 import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
 
+import ListEmptyPlaceholder from '@components/organisms/ListEmptyPlaceholder';
+
 import StockSymbolPressableItem from '@components/molecules/StockSymbolPressableItem';
 import StockSymbolItem from '@components/molecules/StockSymbolItem';
+
+import { watchStockSymbol } from '@store/slices/app/appSlice';
+import { useAppDispatch } from '@store/index';
 
 import { useTheme } from 'react-native-paper';
 
@@ -16,12 +21,19 @@ const StockSymbolsList = ({
 }: StockSymbolsListProps): JSX.Element => {
   const theme = useTheme();
 
+  const dispatch = useAppDispatch();
+
   const renderPopularStockItem = ({
-    item: symbol,
+    item,
   }: ListRenderItemInfo<IStockSymbol>): JSX.Element => (
     <>
-      {type === 'primary' && <StockSymbolPressableItem {...symbol} />}
-      {type === 'secondary' && <StockSymbolItem {...symbol} />}
+      {type === 'primary' && <StockSymbolPressableItem {...item} />}
+      {type === 'secondary' && (
+        <StockSymbolItem
+          {...item}
+          onPress={() => dispatch(watchStockSymbol(item.symbol))}
+        />
+      )}
     </>
   );
 
@@ -32,6 +44,12 @@ const StockSymbolsList = ({
       contentContainerStyle={styles(theme).list}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
+      ListEmptyComponent={
+        <ListEmptyPlaceholder
+          title='Stock symbols not loaded yet! 😥'
+          text='Here will be found the stock symbols list'
+        />
+      }
     />
   );
 };

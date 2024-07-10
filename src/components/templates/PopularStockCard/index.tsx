@@ -18,9 +18,11 @@ const PopularStockCard = (): JSX.Element => {
 
   const navigation = useNavigation<any>();
 
-  const popularStocks = useSelector(
-    (state: MainState) => state.app.popularStockSymbols,
+  const stockSymbols = useSelector(
+    (state: MainState) => state.app.stockSymbols,
   );
+
+  const stockSymbolsSuggestions = stockSymbols.slice(0, 5);
 
   return (
     <Card contentStyles={styles(theme).card}>
@@ -29,7 +31,7 @@ const PopularStockCard = (): JSX.Element => {
         labelButton='Stocks'
         onPress={() => navigation.navigate('FeedScreen')}
       />
-      <StockSymbolsList type='secondary' data={popularStocks} />
+      <StockSymbolsList type='secondary' data={stockSymbolsSuggestions} />
     </Card>
   );
 };

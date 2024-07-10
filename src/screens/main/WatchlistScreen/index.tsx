@@ -1,13 +1,19 @@
+import { useState } from 'react';
+
 import {
   FlatList,
   ListRenderItemInfo,
   Platform,
-  StyleSheet,
+  RefreshControl,
   Text,
   View,
 } from 'react-native';
 
+import { Divider, useTheme } from 'react-native-paper';
+import { useDebouncedCallback } from 'use-debounce';
 import { useSelector } from 'react-redux';
+
+import ListEmptyPlaceholder from '@components/organisms/ListEmptyPlaceholder';
 
 import PopularStockCard from '@components/templates/PopularStockCard';
 
@@ -21,17 +27,38 @@ import { MainState } from '@store/index';
 
 import { resize } from '@utils/scales';
 
-import { Divider, useTheme } from 'react-native-paper';
+import { styles } from './styles';
 
-const AlertsScreen = () => {
+const WatchlistScreen = () => {
   const theme = useTheme();
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const webSocketServiceRef = useSelector(
+    (state: MainState) => state.app.webSocketServiceRef,
+  );
   const watchTrades = useSelector((state: MainState) => state.app.watchTrades);
   const previousPrices = useSelector(
     (state: MainState) => state.app.previousPrices,
   );
 
   useWebSocketService();
+
+  const debounced = useDebouncedCallback(
+    () => {
+      webSocketServiceRef.reconnect();
+      setIsRefreshing(false);
+    },
+    3000,
+    {
+      trailing: true,
+    },
+  );
+
+  const onRefresh = () => {
+    setIsRefreshing(true);
+    debounced();
+  };
 
   const renderTradeItem = ({
     item,
@@ -54,6 +81,15 @@ const AlertsScreen = () => {
           ItemSeparatorComponent={() => <Divider style={styles(theme).div} />}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+          }
+          ListEmptyComponent={
+            <ListEmptyPlaceholder
+              title='Stock not watching yet. Stay up to date now! 🧐'
+              text='📝 Wait 30s for watching your watchlist updated'
+            />
+          }
         />
       </View>
       <PopularStockCard />
@@ -61,17 +97,4 @@ const AlertsScreen = () => {
   );
 };
 
-const styles = (theme: any) =>
-  StyleSheet.create({
-    container: {
-      paddingTop: Platform.OS === 'ios' ? resize(70) : theme.spacing.xxlarge,
-    },
-    title: {
-      fontFamily: theme.fonts.primary,
-      color: theme.colors.primaryBase,
-      fontSize: resize(24),
-    },
-    div: { marginVertical: theme.spacing.medium },
-  });
-
-export default AlertsScreen;
+export default WatchlistScreen;

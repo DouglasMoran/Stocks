@@ -26,7 +26,7 @@ const FeedScreen = () => {
   return (
     <Container containerStyle={styles(theme).container}>
       <Text style={styles(theme).title}>Stock symbols</Text>
-      <StockSymbolsList type='primary' data={stockSymbols} />
+      <StockSymbolsList type='secondary' data={stockSymbols} />
     </Container>
   );
 };

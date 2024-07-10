@@ -50,6 +50,10 @@ export class WebSocketService {
     // this.reconnect();
   };
 
+  public reconnect() {
+    this.initialize();
+  }
+
   public subscribe(symbol: string) {
     const message = JSON.stringify({ type: 'subscribe', symbol });
     if (this.isConnected) {

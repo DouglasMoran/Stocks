@@ -5,17 +5,18 @@ import Button from '@components/atoms/Button';
 import { useTheme } from 'react-native-paper';
 
 import { styles } from './styles';
-import { useAppDispatch } from '@store/index';
-import { watchStockSymbol } from '@store/slices/app/appSlice';
+
+interface StockSymbolItemProps extends IStockSymbol {
+  onPress: () => void;
+}
 
 const StockSymbolItem = ({
   symbol,
   description,
   isWatched,
-}: IStockSymbol): JSX.Element => {
+  onPress,
+}: StockSymbolItemProps): JSX.Element => {
   const theme = useTheme();
-
-  const dispatch = useAppDispatch();
 
   return (
     <View style={styles(theme).contentContainer}>
@@ -27,9 +28,7 @@ const StockSymbolItem = ({
         <Button
           label='Add'
           type={isWatched ? 'solid' : 'outline'}
-          onPress={() =>
-            dispatch(watchStockSymbol({ type: 'popular', symbol }))
-          }
+          onPress={onPress}
         />
       </View>
     </View>

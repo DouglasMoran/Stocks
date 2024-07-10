@@ -26,7 +26,7 @@ const useAuth = () => {
   );
   const token = useSelector((state: MainState) => state.auth.token);
 
-  const { authorize, clearSession } = useAuth0();
+  const { user, authorize, clearSession } = useAuth0();
 
   const passwordInputRef = useRef<TextInput>(null);
 
@@ -69,6 +69,7 @@ const useAuth = () => {
     errorMessage,
     isSignin,
     form,
+    user,
     onLoginWithGoogle,
     onCleanEmailValue,
     onSubmitEditing,
