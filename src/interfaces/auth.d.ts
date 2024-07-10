@@ -1,6 +1,7 @@
 declare global {
   interface AuthState {
     token: string | null;
+    errorMessage: string;
     loading: 'idle' | 'pending' | 'succeeded' | 'failed';
   }
 

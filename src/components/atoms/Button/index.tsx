@@ -1,10 +1,4 @@
-import {
-  Text,
-  View,
-  TouchableNativeFeedback,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
+import { Text, View, StyleProp, ViewStyle } from 'react-native';
 
 import { useTheme } from 'react-native-paper';
 
@@ -14,6 +8,7 @@ import {
   buttonSolidStyle,
   buttonTextStyle,
 } from '@commons/styles';
+import Touchable from '../Touchable';
 
 const Button = ({
   label,
@@ -21,6 +16,9 @@ const Button = ({
   iconRight,
   color,
   type,
+  contentContainerStyle,
+  containerStyle,
+  labelStyle,
   onPress,
 }: ButtonProps): JSX.Element => {
   const theme = useTheme();
@@ -43,32 +41,32 @@ const Button = ({
   };
 
   return (
-    <View style={[styles(theme).outerButtonContainer, cBtnStyle.button]}>
-      <TouchableNativeFeedback
-        background={TouchableNativeFeedback.Ripple(
-          theme.colors.surfaceVariant,
-          false,
-        )}
-        style={styles(theme).touchable}
-        onPress={onPress}
+    <Touchable
+      containerStyle={[cBtnStyle.button, contentContainerStyle]}
+      onPress={onPress}
+    >
+      <View
+        style={[
+          styles(theme).button,
+          containerStyle,
+          !!color && { backgroundColor: color },
+        ]}
       >
-        <View style={styles(theme).button}>
-          {!!icon && (
-            <View
-              style={[
-                styles(theme).iconContainer,
-                iconRight && iconPositionStyle,
-              ]}
-            >
-              {icon}
-            </View>
-          )}
-          <Text style={[styles(theme).buttonText, cBtnStyle.label]}>
-            {label}
-          </Text>
-        </View>
-      </TouchableNativeFeedback>
-    </View>
+        {!!icon && (
+          <View
+            style={[
+              styles(theme).iconContainer,
+              iconRight && iconPositionStyle,
+            ]}
+          >
+            {icon}
+          </View>
+        )}
+        <Text style={[styles(theme).buttonText, cBtnStyle.label, labelStyle]}>
+          {label}
+        </Text>
+      </View>
+    </Touchable>
   );
 };
 

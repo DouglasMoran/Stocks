@@ -1,4 +1,5 @@
 // import { resize } from '@utils/scales';
+import { resize } from '@utils/scales';
 import { StyleSheet } from 'react-native';
 
 const styles = (theme: any) =>
@@ -13,6 +14,7 @@ const styles = (theme: any) =>
       borderRadius: theme.spacing.xsmall,
       color: theme.colors.primaryDarkest,
       overflow: 'hidden',
+      height: resize(48),
     },
     clear: {
       justifyContent: 'center',

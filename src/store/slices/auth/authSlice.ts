@@ -9,6 +9,7 @@ import {
 
 const initialState = {
   token: null,
+  errorMessage: '',
   loading: 'idle',
 } satisfies AuthState as AuthState;
 
@@ -19,6 +20,9 @@ const authSlice = createSlice({
     setLoading: (state, { payload }) => {
       state.loading = payload;
     },
+    setErrorMessage: (state, { payload }) => {
+      state.errorMessage = payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -27,29 +31,39 @@ const authSlice = createSlice({
           state.token = payload;
         }
       })
-      .addCase(loginWithCredentials.pending, (state, action) => {
+      .addCase(loginWithCredentials.pending, (state) => {
         state.loading = 'pending';
       })
       .addCase(loginWithCredentials.fulfilled, (state, action) => {
-        if (action.payload.accessToken) {
+        if (action.payload) {
           state.loading = 'succeeded';
           state.token = action.payload.accessToken;
         }
       })
-      .addCase(loginWithGoogle.pending, (state, action) => {
-        console.log(
-          'loginWithGoogle/pending ::: INITAL STATE ::: ',
-          state.loading,
-        );
-        console.log('loginWithGoogle/pending ::: ACTION ::: ', action);
+      .addCase(loginWithCredentials.rejected, (state, { payload }) => {
+        state.loading = 'failed';
+        if (payload?.message) {
+          state.errorMessage = payload.message;
+          return;
+        }
+
+        state.errorMessage = 'Sorry something went wrong!';
+      })
+      .addCase(loginWithGoogle.pending, (state) => {
+        state.loading = 'pending';
       })
       .addCase(loginWithGoogle.fulfilled, (state, action) => {
-        console.log('loginWithGoogle/fulfilled ::: STATE ::: ', state);
-        console.log('loginWithGoogle/fulfilled ::: ACTION ::: ', action);
-        console.log(
-          'loginWithGoogle ::: INITIAL STATE TOKEN ::: ',
-          state.token,
-        );
+        state.loading = 'succeeded';
+        state.token = action.payload.accessToken;
+      })
+      .addCase(loginWithGoogle.rejected, (state, { payload }) => {
+        state.loading = 'failed';
+        if (payload?.message) {
+          state.errorMessage = payload.message;
+          return;
+        }
+
+        state.errorMessage = 'Sorry something went wrong!';
       })
       .addCase(clearCurrentSesion.pending, (state, action) => {
         state.loading = 'pending';
@@ -61,6 +75,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { setLoading } = authSlice.actions;
+export const { setLoading, setErrorMessage } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   KeyboardTypeOptions,
   StyleProp,
@@ -40,6 +42,16 @@ declare global {
     iconRight?: boolean;
     color?: string;
     labelStyle?: StyleProp<ViewStyle>;
+    containerStyle?: StyleProp<ViewStyle>;
+    contentContainerStyle?: StyleProp<ViewStyle>;
+    onPress: () => void;
+  }
+
+  interface TouchableProps {
+    children: React.ReactNode;
+    rippleColor?: string;
+    containerStyle?: StyleProp<ViewStyle>;
+    touchableStyle?: StyleProp<ViewStyle>;
     onPress: () => void;
   }
 
@@ -55,9 +67,40 @@ declare global {
     token?: string;
   }
 
-  interface AppState {
-    watchlist: any[];
+  interface IDatumTrade {
+    p: number;
+    s: string;
+    t: number;
+    v: number;
   }
+
+  interface IWatchTrade {
+    data: Datum[];
+    type: string;
+  }
+
+  interface IStockSymbol {
+    currency: string;
+    description: string;
+    displaySymbol: string;
+    figi: string;
+    mic: string;
+    symbol: string;
+    type: string;
+    isWatched?: boolean;
+  }
+
+  interface AppState {
+    symbolWatches: string[];
+    watchTrades: IDatumTrade[];
+    previousPrices: { [symbol: string]: number };
+    popularStockSymbols: string[];
+    stockSymbols: IStockSymbol[];
+    webSocketServiceRef: WebSocketService | null;
+    isLoadingStockSymbols: 'idle' | 'pending' | 'succeeded' | 'failed';
+  }
+
+  type StockSymbolItemType = 'primary' | 'secondary';
 }
 
 export {};

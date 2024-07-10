@@ -1,6 +1,5 @@
+import { resize } from '@utils/scales';
 import { StyleSheet } from 'react-native';
-
-// import { resize } from '@utils/scales';
 
 const styles = (theme: any) =>
   StyleSheet.create({
@@ -14,6 +13,7 @@ const styles = (theme: any) =>
       paddingStart: theme.spacing.xsmall,
       color: theme.colors.primaryDarkest,
       overflow: 'hidden',
+      height: resize(48),
     },
     clear: {
       justifyContent: 'center',

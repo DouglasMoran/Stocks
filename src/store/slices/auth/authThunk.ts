@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Auth0, { PasswordRealmOptions } from 'react-native-auth0';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   Credentials,
@@ -9,18 +10,7 @@ import {
 } from 'react-native-auth0';
 
 import { TOKEN } from '@constants/index';
-
-export const setUserToken = createAsyncThunk(
-  'user/setUserTokenStatus',
-  async (token: string, { rejectWithValue }) => {
-    try {
-      await AsyncStorage.setItem(TOKEN, token);
-      return true;
-    } catch (error) {
-      rejectWithValue('Somenthing went wrong');
-    }
-  },
-);
+import { AUTH_CLIENT_ID, AUTH_DB, AUTH_DOMAIN } from '@env';
 
 export const getUserToken = createAsyncThunk(
   'auth/getUserTokenStatus',
@@ -34,43 +24,53 @@ export const getUserToken = createAsyncThunk(
   },
 );
 
-export const loginWithCredentials = createAsyncThunk<
+export const loginWithGoogle = createAsyncThunk<
   LoginResponse,
   {
-    credentials: GoogleCredentials;
     authorize: (
       parameters?: WebAuthorizeParameters,
       options?: WebAuthorizeOptions,
     ) => Promise<Credentials | undefined>;
   },
   AsyncThunkConfig
+>('auth/loginWithGoogleStatus', async ({ authorize }, { rejectWithValue }) => {
+  try {
+    const response = await authorize();
+
+    if (response?.accessToken) {
+      await AsyncStorage.setItem(TOKEN, response.accessToken);
+      return { status: 'success', accessToken: response.accessToken };
+    }
+
+    return { status: 'empty', accessToken: '' };
+  } catch (error) {
+    return rejectWithValue(error);
+  }
+});
+
+export const loginWithCredentials = createAsyncThunk<
+  LoginResponse,
+  { credentials: GoogleCredentials },
+  AsyncThunkConfig
 >(
   'auth/loginWithCredentialsStatus',
-  async ({ credentials, authorize }, { rejectWithValue }) => {
+  async ({ credentials: { email, password } }, { rejectWithValue }) => {
     try {
-      console.log('CREDENTIALS ENTERED ::: ', credentials);
-      const response = await authorize();
+      const auth0 = new Auth0({
+        domain: AUTH_DOMAIN,
+        clientId: AUTH_CLIENT_ID,
+      });
 
-      if (response) {
-        await AsyncStorage.setItem(TOKEN, response.accessToken);
-        return { status: 'success', accessToken: response?.accessToken };
-      }
+      const options = {
+        username: email,
+        password,
+        realm: AUTH_DB,
+        scope: 'openid profile email',
+      } satisfies PasswordRealmOptions as PasswordRealmOptions;
 
-      return { status: 'empty', accessToken: '' };
-    } catch (error) {
-      console.log('THUNK API ::: ', error, rejectWithValue);
-      return rejectWithValue('error');
-    }
-  },
-);
+      const response = await auth0.auth.passwordRealm(options);
 
-export const loginWithGoogle = createAsyncThunk(
-  'auth/loginWithGoogleStatus',
-  async (_, { rejectWithValue }) => {
-    try {
-      console.log('GOOGLE SIGN IN ::: ', _);
-      console.log('GOOGLE SIGN IN ::: THUNK API ::: ');
-      return { status: 'success', data: 'Testing Thunk' };
+      return { status: 'success', accessToken: response.accessToken };
     } catch (error) {
       return rejectWithValue(error);
     }

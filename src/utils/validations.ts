@@ -13,9 +13,10 @@ export const googleCredentialsSchema = Yup.object().shape({
   password: Yup.string()
     .required(FIELD_REQUIRED)
     .min(7, 'Password must be at least 7 characters*')
-    .max(21, 'Password must be at most 21 characters*')
-    .matches(
-      REGEX_VALIDATION.noSpecialChars,
-      'Password, no special characters*',
-    ),
+    .max(21, 'Password must be at most 21 characters*'),
+  // noSpecialChars validation disable tmp because is need to enter password saved by google key pass
+  // .matches(
+  //   REGEX_VALIDATION.noSpecialChars,
+  //   'Password, no special characters*',
+  // ),
 });

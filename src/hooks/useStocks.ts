@@ -1,18 +1,14 @@
 import { useEffect } from 'react';
 
-import { getWatchlist } from '@store/slices/app/appThunk';
+import { getStockSymbols, getStockProfile } from '@store/slices/app/appThunk';
 import { useAppDispatch } from '@store/index';
 
 const useStocks = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getWatchlist());
+    dispatch(getStockSymbols());
   }, []);
-
-  return {
-    onGetWatchlist: getWatchlist,
-  };
 };
 
 export default useStocks;

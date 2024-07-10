@@ -48,6 +48,18 @@ const styles = (theme: any) =>
     divider: {
       flex: 1,
     },
+    error: {
+      borderRadius: resize(8),
+      backgroundColor: theme.colors.alertLight,
+      paddingVertical: theme.spacing.xxsmall,
+      fontFamily: theme.fonts.secondary,
+      marginTop: theme.spacing.xxsmall,
+      color: theme.colors.alertDark,
+      paddingHorizontal: theme.spacing.medium,
+      alignSelf: 'center',
+      textAlign: 'center',
+      fontSize: resize(14),
+    },
   });
 
 export default styles;

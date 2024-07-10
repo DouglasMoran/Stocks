@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { TextInput } from 'react-native';
 
@@ -7,6 +7,7 @@ import { useAuth0 } from 'react-native-auth0';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
+import { setErrorMessage } from '@store/slices/auth/authSlice';
 import { useAppDispatch } from '@store/index';
 import { MainState } from '@store/index';
 import {
@@ -20,9 +21,12 @@ import { googleCredentialsSchema } from '@utils/validations';
 const useAuth = () => {
   const dispatch = useAppDispatch();
 
+  const errorMessage = useSelector(
+    (state: MainState) => state.auth.errorMessage,
+  );
   const token = useSelector((state: MainState) => state.auth.token);
 
-  const { authorize, clearSession } = useAuth0();
+  const { user, authorize, clearSession } = useAuth0();
 
   const passwordInputRef = useRef<TextInput>(null);
 
@@ -39,10 +43,12 @@ const useAuth = () => {
   const onCleanEmailValue = () => form.setValue('email', '');
 
   const onSubmit = form.handleSubmit((data) => {
-    dispatch(loginWithCredentials({ credentials: data, authorize }));
+    dispatch(loginWithCredentials({ credentials: data })).finally(() => {
+      form.reset();
+    });
   });
 
-  const onLoginWithGoogle = () => dispatch(loginWithGoogle());
+  const onLoginWithGoogle = () => dispatch(loginWithGoogle({ authorize }));
 
   const onSignout = () => dispatch(clearCurrentSesion({ clearSession }));
 
@@ -52,10 +58,18 @@ const useAuth = () => {
     }
   };
 
+  useEffect(() => {
+    if (form.formState.isDirty) {
+      dispatch(setErrorMessage(''));
+    }
+  }, [form.formState.isDirty]);
+
   return {
     passwordInputRef,
+    errorMessage,
     isSignin,
     form,
+    user,
     onLoginWithGoogle,
     onCleanEmailValue,
     onSubmitEditing,
